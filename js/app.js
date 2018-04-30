@@ -69,6 +69,8 @@ function init() {
                      container.append(entryTemplate(entry));
                  });
 
+                // console.log(entries[0]);
+
                  if (cb) {
                      cb();
                  }
