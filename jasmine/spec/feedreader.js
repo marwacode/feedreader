@@ -4,30 +4,22 @@
  * all of the tests that will be run against your application.
  */
 
-/* We're placing all of our tests within the $() function,
- * since some of these tests may require DOM elements. We want
- * to ensure they don't run until the DOM is ready.
- */
+
 $(function () {
-    /* This is our first test suite - a test suite just contains
-    * a related set of tests. This suite is all about the RSS
-    * feeds definitions, the allFeeds variable in our application.
-    */
+
     describe('RSS Feeds', function () {
-        /* This is our first test - it tests to make sure that the
+        /*  tests to make sure that the
          * allFeeds variable has been defined and that it is not
-         * empty. Experiment with this before you get started on
-         * the rest of this project. What happens when you change
-         * allFeeds in app.js to be an empty array and refresh the
-         * page?
+         * empty. 
          */
+
         it('are defined', function () {
             expect(allFeeds).toBeDefined();
             expect(allFeeds.length).not.toBe(0);
         });
 
 
-        /* TODO: Write a test that loops through each feed
+        /*  a test that loops through each feed
          * in the allFeeds object and ensures it has a URL defined
          * and that the URL is not empty.
          */
@@ -40,10 +32,8 @@ $(function () {
         });
 
 
-        /* TODO: Write a test that loops through each feed
-         * in the allFeeds object and ensures it has a name defined
-         * and that the name is not empty.
-         */
+        // test that loops through each feed in the allFeeds object and ensures it has a name defined
+        // and that the name is not empty.
 
         it('name should be defined', function () {
             allFeeds.forEach(function (feed) {
@@ -54,25 +44,13 @@ $(function () {
     });
 
 
-    /* TODO: Write a new test suite named "The menu" */
-
-    /* TODO: Write a test that ensures the menu element is
-         * hidden by default. You'll have to analyze the HTML and
-         * the CSS to determine how we're performing the
-         * hiding/showing of the menu element.
-         */
-
-    /* TODO: Write a test that ensures the menu changes
-     * visibility when the menu icon is clicked. This test
-     * should have two expectations: does the menu display when
-     * clicked and does it hide when clicked again.
-     */
+    //  test that ensures the menu changes visibility when the menu icon is clicked
 
     describe('The menu', function () {
 
         it('menu element should be hidden by default', function () {
-            var body = document.querySelector('body');
-            expect(body.className).toEqual('menu-hidden');
+
+            expect($('body').hasClass('menu-hidden')).toBe(true);
         })
 
         it('menu should change visibility when the menu icon is clicked', function () {
@@ -89,53 +67,55 @@ $(function () {
     })
 
 
-    /* TODO: Write a new test suite named "Initial Entries" */
+    // test that ensures when the loadFeed function is called and completes its work
 
-    /* TODO: Write a test that ensures when the loadFeed
-     * function is called and completes its work, there is at least
-     * a single .entry element within the .feed container.
-     * Remember, loadFeed() is asynchronous so this test will require
-     * the use of Jasmine's beforeEach and asynchronous done() function.
-     */
     describe('Initial Entries', function () {
+
+        var feed;
 
         beforeEach(function (done) {
 
             loadFeed(0, (function () {
+                feed = $('.feed .entry').children()[0];
                 done();
             }))
         });
 
-
         it('there should be at least a single .entry element within the .feed container', function (done) {
 
-            var entry1 = $('.feed .entry').children()[0];
-
-            expect(entry1).toBeDefined();
+            expect(feed).toBeDefined();
             done();
 
         });
 
-    })
+    });
 
-    /* TODO: Write a new test suite named "New Feed Selection" */
 
-    /* TODO: Write a test that ensures when a new feed is loaded
-     * by the loadFeed function that the content actually changes.
-     * Remember, loadFeed() is asynchronous.
-     */
+    //  test that ensures when a new feed is loaded and the content actually changes.
     describe('New Feed Selection', function () {
 
+        var fee1;
+        var feed2;
+
         beforeEach(function (done) {
-            (function () {
-                loadFeed(0);
-                loadFeed(1);
-                done();
+
+            loadFeed(0, function () {
+
+                feed1 = $('.feed .entry').children()[0].innerHTML;
+
+                loadFeed(1, function () {
+
+                    feed2 = $('.feed .entry').children()[0].innerHTML;
+                    done();
+
+                })
             })
         });
 
         it('new feed should be loaded and the content should changes', function (done) {
-            expect($('.feed .entry').children()[0].innerHTML).not.toEqual($('.feed .entry').children()[1].innerHTML);
+
+            expect(feed1).not.toEqual(feed2);
+            done();
         })
     })
 
