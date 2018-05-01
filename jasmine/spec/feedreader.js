@@ -49,7 +49,7 @@ $(function () {
     describe('The menu', function () {
 
         it('menu element should be hidden by default', function () {
-
+           
             expect($('body').hasClass('menu-hidden')).toBe(true);
         })
 
@@ -76,9 +76,9 @@ $(function () {
         beforeEach(function (done) {
 
             loadFeed(0, (function () {
-                feed = $('.feed .entry').children()[0];
+                feed =  $('.feed .entry').children()[0];
                 done();
-            }))
+            }));
         });
 
         it('there should be at least a single .entry element within the .feed container', function (done) {
@@ -108,8 +108,8 @@ $(function () {
                     feed2 = $('.feed .entry').children()[0].innerHTML;
                     done();
 
-                })
-            })
+                });
+            });
         });
 
         it('new feed should be loaded and the content should changes', function (done) {
